@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>From Go-to-Market to Go-to-Value · Executive Brief · Frank Tommy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #161614;
+    --ink-soft: #2c2a26;
+    --ink-mute: #5b5852;
+    --paper: #f5f1ea;
+    --paper-warm: #ebe5d8;
+    --paper-cool: #f0ece3;
+    --rule: #d8d0bf;
+    --rule-soft: #e6dfce;
+    --accent: #c8492c;
+    --accent-soft: #e8b8a6;
+    --accent-deep: #8a2a14;
+    --accent-pale: #f5dcd0;
+    --green: #4a6b3a;
+    --green-soft: #c5d4ba;
+    --gold: #b8893a;
+    --gold-soft: #f0e2be;
+    --purple: #6b5b8a;
+    --purple-soft: #dcd3e5;
+    --blue: #3a5a7a;
+    --blue-soft: #c5d4e0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(circle at 1px 1px, rgba(22,22,20,0.04) 1px, transparent 0);
+    background-size: 24px 24px;
+  }
+
+  .frame {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 48px 56px 80px;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .topbar .brand { font-weight: 600; }
+  .topbar .meta { color: var(--ink-mute); }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap: 64px;
+    margin-bottom: 96px;
+    align-items: end;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(48px, 6.4vw, 92px);
+    line-height: 0.96;
+    letter-spacing: -0.022em;
+    margin-bottom: 32px;
+  }
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent-deep);
+  }
+  .lede {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.45;
+    font-weight: 300;
+    color: var(--ink-soft);
+    max-width: 620px;
+  }
+
+  .hero-side {
+    border-left: 1px solid var(--ink);
+    padding-left: 32px;
+  }
+  .hero-side .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .hero-side .role {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 24px;
+  }
+  .hero-side .role em { font-style: italic; color: var(--accent-deep); }
+  .hero-side .meeting {
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+  .hero-side .meeting strong { color: var(--ink); display: block; margin-bottom: 4px; font-weight: 600; }
+
+  /* SECTIONS */
+  .section { margin-bottom: 96px; }
+  .section-head {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    align-items: baseline;
+    margin-bottom: 44px;
+    border-top: 1px solid var(--ink);
+    padding-top: 16px;
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 38px;
+    letter-spacing: -0.012em;
+    line-height: 1.08;
+  }
+  .section-title em { font-style: italic; color: var(--accent-deep); }
+  .section-sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-mute);
+    margin-top: 8px;
+    font-weight: 300;
+    max-width: 760px;
+  }
+
+  /* THE BIG SHIFT — two funnels */
+  .shift-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .shift-prose h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+  }
+  .shift-prose h3 em { font-style: italic; color: var(--accent-deep); }
+  .shift-prose p {
+    font-size: 15.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .shift-prose .pull {
+    margin-top: 24px;
+    padding: 18px 22px;
+    border-left: 3px solid var(--accent);
+    background: var(--paper-warm);
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .funnels {
+    background: #fff;
+    border: 1px solid var(--ink);
+    padding: 32px;
+    position: relative;
+  }
+  .funnels-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .funnels svg { width: 100%; height: auto; display: block; }
+
+  /* THREE INITIATIVES */
+  .initiatives {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .init {
+    border: 1px solid var(--ink);
+    background: #fff;
+    overflow: hidden;
+  }
+  .init-head {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+    gap: 24px;
+  }
+  .init-num {
+    font-family: 'Fraunces', serif;
+    font-size: 56px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--accent-soft);
+    letter-spacing: -0.02em;
+  }
+  .init-name {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.15;
+  }
+  .init-name em { font-style: italic; color: var(--accent-soft); }
+  .init-name span {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+  .init-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+  .init-body {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 0;
+  }
+  .init-cell {
+    padding: 28px;
+    border-right: 1px solid var(--rule);
+  }
+  .init-cell:last-child { border-right: none; }
+  .init-cell h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .init-cell .why {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.4;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .init-cell .why em { font-style: italic; color: var(--accent-deep); }
+  .init-cell ul { list-style: none; padding: 0; }
+  .init-cell li {
+    font-size: 13.5px;
+    line-height: 1.55;
+    padding: 8px 0 8px 18px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+    position: relative;
+  }
+  .init-cell li:first-child { border-top: none; }
+  .init-cell li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'Fraunces', serif;
+  }
+  .init-cell .kpi {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 10px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .init-cell .kpi:first-of-type { border-top: none; }
+  .init-cell .kpi-num {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--accent-deep);
+    min-width: 60px;
+  }
+  .init-cell .kpi-text {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+
+  /* TIERED PYRAMID */
+  .tiered-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .tiered-prose h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .tiered-prose p {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .pyramid {
+    background: #fff;
+    border: 1px solid var(--ink);
+    padding: 32px;
+  }
+  .pyramid svg { width: 100%; height: auto; display: block; }
+
+  .tier-detail {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .tier-cell {
+    background: #fff;
+    padding: 16px 14px;
+  }
+  .tier-cell .tier-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .tier-cell.t1 .tier-tag { color: var(--accent-deep); }
+  .tier-cell.t2 .tier-tag { color: #6b4d1f; }
+  .tier-cell.t3 .tier-tag { color: var(--green); }
+  .tier-cell h6 {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .tier-cell p {
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: var(--ink-mute);
+  }
+
+  /* OPERATING SYSTEM GRID */
+  .grid-wrap {
+    background: #fff;
+    border: 1px solid var(--ink);
+    overflow-x: auto;
+  }
+  .opgrid {
+    display: grid;
+    grid-template-columns: 220px repeat(5, 1fr);
+    min-width: 900px;
+  }
+  .opgrid-cell {
+    padding: 14px 16px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    font-size: 12.5px;
+    line-height: 1.45;
+    min-height: 60px;
+  }
+  .opgrid-cell:nth-child(6n) { border-right: none; }
+  .opgrid-corner {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 14px 16px;
+    border-right: 1px solid #2c2a26;
+    display: flex;
+    align-items: center;
+  }
+  .opgrid-fhead {
+    background: var(--paper-warm);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    padding: 14px 8px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--ink);
+    line-height: 1.25;
+  }
+  .opgrid-fhead small {
+    display: block;
+    font-weight: 400;
+    font-size: 9.5px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .opgrid-rhead {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 16px 18px;
+    line-height: 1.25;
+    border-bottom: 1px solid #2c2a26;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .opgrid-rhead small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .pmm-cell { background: var(--accent-pale); }
+  .pmm-cell::before {
+    content: "OWN";
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    color: var(--accent-deep);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  /* RITUALS */
+  .rituals {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .ritual {
+    background: #fff;
+    padding: 22px 20px;
+  }
+  .ritual .when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .ritual h6 {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .ritual p {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  /* ROADMAP */
+  .roadmap {
+    background: #fff;
+    border: 1px solid var(--ink);
+    padding: 36px 32px;
+  }
+  .roadmap-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+    margin-top: 20px;
+  }
+  .roadmap-track::before {
+    content: "";
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--ink);
+    z-index: 0;
+  }
+  .roadmap-phase {
+    position: relative;
+    padding-top: 70px;
+    padding-right: 20px;
+    z-index: 1;
+  }
+  .roadmap-phase::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 4px solid #fff;
+    box-shadow: 0 0 0 1px var(--ink);
+  }
+  .roadmap-phase:last-child::before { background: var(--accent-deep); }
+  .roadmap-phase .ph-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .roadmap-phase h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .roadmap-phase h4 em { font-style: italic; color: var(--accent-deep); }
+  .roadmap-phase ul { list-style: none; padding: 0; }
+  .roadmap-phase li {
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 8px 0 8px 16px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft);
+    position: relative;
+  }
+  .roadmap-phase li:first-child { border-top: none; }
+  .roadmap-phase li::before {
+    content: "·";
+    position: absolute;
+    left: 4px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  /* MANDATE ASK */
+  .mandate {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .mandate-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 36px 32px;
+    border: 1px solid var(--ink);
+  }
+  .mandate-card.alt {
+    background: #fff;
+    color: var(--ink);
+  }
+  .mandate-card .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 14px;
+  }
+  .mandate-card.alt .label { color: var(--accent); }
+  .mandate-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 22px;
+  }
+  .mandate-card h3 em { font-style: italic; color: var(--accent-soft); }
+  .mandate-card.alt h3 em { color: var(--accent-deep); }
+  .mandate-list { list-style: none; }
+  .mandate-list li {
+    padding: 14px 0;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .mandate-card.alt .mandate-list li { border-top: 1px solid var(--rule); }
+  .mandate-list li:first-child { border-top: none; }
+  .mandate-list li strong {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .mandate-card.alt .mandate-list li strong { color: var(--accent); }
+
+  /* FOOTER */
+  .footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .footer em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 13px;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--accent-deep);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1000px) {
+    .frame { padding: 32px 24px; }
+    .hero { grid-template-columns: 1fr; gap: 32px; }
+    .hero-side { border-left: none; border-top: 1px solid var(--ink); padding-left: 0; padding-top: 28px; }
+    .shift-wrap { grid-template-columns: 1fr; }
+    .init-body { grid-template-columns: 1fr; }
+    .init-cell { border-right: none; border-bottom: 1px solid var(--rule); }
+    .tiered-wrap { grid-template-columns: 1fr; }
+    .tier-detail { grid-template-columns: 1fr; }
+    .roadmap-track { grid-template-columns: 1fr; gap: 32px; }
+    .roadmap-track::before { display: none; }
+    .roadmap-phase { padding-top: 0; padding-left: 28px; }
+    .roadmap-phase::before { top: 0; left: 0; }
+    .mandate { grid-template-columns: 1fr; }
+    .rituals { grid-template-columns: 1fr; }
+    .init-head { grid-template-columns: 60px 1fr; }
+    .init-tag { grid-column: 2; justify-self: start; margin-top: 4px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .frame { padding: 20px; max-width: 100%; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span class="brand">Papirfly · Executive Brief</span>
+    <span class="meta">Prep doc · 1:1 with new CCSSO · v1.0 · Confidential</span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow">A strategic brief for Frank Tommy</div>
+      <h1>From Go-to-Market to <em>Go-to-Value.</em></h1>
+      <p class="lede">Papirfly solved its first two strategic problems — unifying the platform, and sharpening sales &amp; marketing. The third, and most consequential, is now: <strong>making customers wildly successful, fast, at scale</strong>. Three core initiatives, one operating system, twelve months.</p>
+    </div>
+    <aside class="hero-side">
+      <div class="label">Role · Mandate</div>
+      <div class="role">VP Product Marketing &amp; <em>Customer Engagement.</em></div>
+      <div class="meeting">
+        <strong>Pre-meeting prep</strong>
+        Open-minded planning conversation with the new Chief Customer Services &amp; Success Officer. The goal of this brief: walk in with a clear mental model, a defendable three-initiative plan, and a specific ask.
+      </div>
+    </aside>
+  </section>
+
+  <!-- SECTION 01 — THE BIG SHIFT -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">01</div>
+      <div>
+        <h2 class="section-title">The shift that <em>reframes</em> the role</h2>
+        <p class="section-sub">Two funnels, not one. Most of the value lives in the second.</p>
+      </div>
+    </div>
+
+    <div class="shift-wrap">
+      <div class="shift-prose">
+        <h3>The first funnel ends at <em>contract signed.</em> The second is where compounding value lives.</h3>
+        <p>Papirfly's previous two iterations of "#1 problem" both lived in the <strong>first funnel</strong> — getting attention, building positioning, closing deals. That work is largely solved.</p>
+        <p>The current problem set — slow time-to-value, weak feature adoption, fragmented CS processes — all live in the <strong>second funnel</strong>: Activate → Adopt → Advocate → Expand. This is where Net Revenue Retention is won or lost. In SaaS, NRR is now a bigger valuation lever than new logo growth.</p>
+        <div class="pull">Product Marketing's playbook — narrative, personas, enablement, cross-functional orchestration — translates one-for-one into the second funnel. The role doesn't change. The audience does: from prospects to <strong>customers, CSMs, and CS leaders.</strong></div>
+      </div>
+
+      <div class="funnels">
+        <div class="funnels-title">Two funnels · one customer</div>
+        <svg viewBox="0 0 600 360" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <linearGradient id="g1" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#d8d0bf" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#5b5852" stop-opacity="0.4"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#e8b8a6" stop-opacity="0.5"/>
+              <stop offset="100%" stop-color="#c8492c" stop-opacity="0.95"/>
+            </linearGradient>
+          </defs>
+
+          <!-- LEFT FUNNEL (GTM) -->
+          <text x="120" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" fill="#5b5852">GO-TO-MARKET · SOLVED</text>
+          <polygon points="40,40 200,40 170,180 70,180" fill="url(#g1)" stroke="#5b5852" stroke-width="0.8"/>
+          <text x="120" y="68" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill="#2c2a26" font-style="italic">Awareness</text>
+          <line x1="55" y1="82" x2="185" y2="82" stroke="#5b5852" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <text x="120" y="106" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill="#2c2a26" font-style="italic">Consideration</text>
+          <line x1="65" y1="120" x2="175" y2="120" stroke="#5b5852" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <text x="120" y="146" text-anchor="middle" font-family="Fraunces, serif" font-size="13" fill="#2c2a26" font-style="italic">Purchase</text>
+
+          <!-- HANDOFF ARROW -->
+          <path d="M 200 110 Q 260 120 285 95 L 290 100 M 285 95 L 290 90" fill="none" stroke="#c8492c" stroke-width="2"/>
+          <text x="245" y="80" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1.5" fill="#c8492c">HANDOFF</text>
+
+          <!-- RIGHT FUNNEL (GTV) - more prominent, wider -->
+          <text x="450" y="22" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.5" fill="#8a2a14" font-weight="600">GO-TO-VALUE · THE WORK AHEAD</text>
+          <polygon points="320,40 580,40 550,310 350,310" fill="url(#g2)" stroke="#8a2a14" stroke-width="1.2"/>
+          <text x="450" y="74" text-anchor="middle" font-family="Fraunces, serif" font-size="16" fill="#fff" font-weight="500">Activate</text>
+          <line x1="335" y1="92" x2="565" y2="92" stroke="#fff" stroke-width="0.5" stroke-opacity="0.4"/>
+          <text x="450" y="138" text-anchor="middle" font-family="Fraunces, serif" font-size="16" fill="#fff" font-weight="500">Adopt</text>
+          <line x1="345" y1="156" x2="555" y2="156" stroke="#fff" stroke-width="0.5" stroke-opacity="0.4"/>
+          <text x="450" y="202" text-anchor="middle" font-family="Fraunces, serif" font-size="16" fill="#fff" font-weight="500">Advocate</text>
+          <line x1="355" y1="220" x2="545" y2="220" stroke="#fff" stroke-width="0.5" stroke-opacity="0.4"/>
+          <text x="450" y="266" text-anchor="middle" font-family="Fraunces, serif" font-size="16" fill="#fff" font-weight="500">Expand</text>
+
+          <!-- Bottom labels -->
+          <text x="120" y="210" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#5b5852">Marketing · Sales</text>
+          <text x="450" y="340" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#8a2a14" font-weight="600">Product Mktg + CS + Cust Marketing + PM</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 02 — THE THREE INITIATIVES -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">02</div>
+      <div>
+        <h2 class="section-title">Three core <em>initiatives</em></h2>
+        <p class="section-sub">Each maps to a stage of the second funnel. Together they form a closed loop.</p>
+      </div>
+    </div>
+
+    <div class="initiatives">
+
+      <!-- INITIATIVE 1 -->
+      <div class="init">
+        <div class="init-head">
+          <div class="init-num">01</div>
+          <div class="init-name">The <em>Activation</em> Engine<span>First 90 days · Time-to-value</span></div>
+          <div class="init-tag">For new customers</div>
+        </div>
+        <div class="init-body">
+          <div class="init-cell">
+            <h5>The problem we're solving</h5>
+            <p class="why">New customers spend too long getting to <em>first measurable value</em>. Five flagship products from M&amp;A history means five different onboarding shapes — and no single playbook.</p>
+            <p style="font-size: 13.5px; color: var(--ink-mute); line-height: 1.55;">Done well, this is the highest-leverage initiative: it reduces churn risk in the first 12 months, strengthens expansion conversations later, and signals to the CS team that the new operating model works.</p>
+          </div>
+          <div class="init-cell">
+            <h5>What we build</h5>
+            <ul>
+              <li>A defined "first value milestone" per product / use case</li>
+              <li>One onboarding playbook per top vertical (initially 3)</li>
+              <li>In-product activation flows — checklists, tooltips, milestone celebrations</li>
+              <li>Self-serve content library (academy, video, templates)</li>
+              <li>Tiered onboarding: white-glove for top ARR, programmatic for the rest</li>
+            </ul>
+          </div>
+          <div class="init-cell">
+            <h5>Goals · 12 months</h5>
+            <div class="kpi"><div class="kpi-num">−40%</div><div class="kpi-text">reduction in median time-to-first-value</div></div>
+            <div class="kpi"><div class="kpi-num">≥75%</div><div class="kpi-text">of new accounts hit milestone in 90 days</div></div>
+            <div class="kpi"><div class="kpi-num">−25%</div><div class="kpi-text">first-year churn rate</div></div>
+            <div class="kpi"><div class="kpi-num">+15</div><div class="kpi-text">point lift in onboarding NPS</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INITIATIVE 2 -->
+      <div class="init">
+        <div class="init-head">
+          <div class="init-num">02</div>
+          <div class="init-name">The <em>Adoption</em> Flywheel<span>Existing customers · Outcome-led</span></div>
+          <div class="init-tag">For existing base</div>
+        </div>
+        <div class="init-body">
+          <div class="init-cell">
+            <h5>The problem we're solving</h5>
+            <p class="why">Customers don't adopt features — they adopt <em>outcomes</em>. We've been organizing around our products. We need to reorganize around the 4–5 customer outcomes our products serve.</p>
+            <p style="font-size: 13.5px; color: var(--ink-mute); line-height: 1.55;">This is where Net Revenue Retention compounds. Get this right and expansion becomes a natural conversation, not a sales push. The Portal Admin 1.2 launch is the prototype — now industrialize it.</p>
+          </div>
+          <div class="init-cell">
+            <h5>What we build</h5>
+            <ul>
+              <li>3–5 named customer outcomes (replace feature-led roadmap comms)</li>
+              <li>Tiered programs: 1:1 (Tier 1), 1:few (Tier 2), 1:many (Tier 3)</li>
+              <li>Vertical-specific narratives — retail, finance, public sector, etc.</li>
+              <li>Reusable launch playbook (the Portal Admin 1.2 model, productized)</li>
+              <li>Customer advocacy &amp; story engine — feed sales, marketing, and CS</li>
+            </ul>
+          </div>
+          <div class="init-cell">
+            <h5>Goals · 12 months</h5>
+            <div class="kpi"><div class="kpi-num">+8pts</div><div class="kpi-text">improvement in Net Revenue Retention</div></div>
+            <div class="kpi"><div class="kpi-num">≥50%</div><div class="kpi-text">feature adoption on new releases (4-week window)</div></div>
+            <div class="kpi"><div class="kpi-num">12+</div><div class="kpi-text">customer advocates / case studies in library</div></div>
+            <div class="kpi"><div class="kpi-num">−30%</div><div class="kpi-text">support-ticket volume on top 3 use cases</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INITIATIVE 3 -->
+      <div class="init">
+        <div class="init-head">
+          <div class="init-num">03</div>
+          <div class="init-name">The <em>Voice &amp; Velocity</em> System<span>Cross-functional · Always-on</span></div>
+          <div class="init-tag">For the company</div>
+        </div>
+        <div class="init-body">
+          <div class="init-cell">
+            <h5>The problem we're solving</h5>
+            <p class="why">CS has alignment and process gaps with Product, Marketing, and Sales. There is no <em>operating system</em> that connects customer voice to roadmap, narrative, and enablement on a predictable cadence.</p>
+            <p style="font-size: 13.5px; color: var(--ink-mute); line-height: 1.55;">This is the unsexy one. It's also the only one that makes Initiatives 01 and 02 sustainable. Without it, you're back to launches as one-offs and CS as a reactive function.</p>
+          </div>
+          <div class="init-cell">
+            <h5>What we build</h5>
+            <ul>
+              <li>Customer Council — quarterly forum, 12–15 strategic accounts</li>
+              <li>Win/Loss/Churn loop — monthly read into Product &amp; Sales</li>
+              <li>CSM enablement program — train-the-trainer at scale</li>
+              <li>Cross-functional rituals: weekly stand-up, monthly outcome review, QBR</li>
+              <li>Customer outcome dashboard — single source of truth, all functions</li>
+            </ul>
+          </div>
+          <div class="init-cell">
+            <h5>Goals · 12 months</h5>
+            <div class="kpi"><div class="kpi-num">100%</div><div class="kpi-text">CSMs certified on enablement program</div></div>
+            <div class="kpi"><div class="kpi-num">12</div><div class="kpi-text">strategic accounts in Customer Council</div></div>
+            <div class="kpi"><div class="kpi-num">+20</div><div class="kpi-text">points in cross-functional alignment survey</div></div>
+            <div class="kpi"><div class="kpi-num">100%</div><div class="kpi-text">launches use standardized playbook by Q3</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 03 — TIERED MODEL -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">03</div>
+      <div>
+        <h2 class="section-title">How we <em>scale</em>: tiered, not flat</h2>
+        <p class="section-sub">The same initiatives delivered three ways — matched to customer value and complexity.</p>
+      </div>
+    </div>
+
+    <div class="tiered-wrap">
+      <div class="tiered-prose">
+        <h3>One playbook, three delivery modes.</h3>
+        <p>The trap most CS organizations fall into is treating every customer the same way — either over-investing in long-tail accounts, or under-serving strategic ones. The fix is tiered delivery, where each initiative shows up differently for each tier.</p>
+        <p>The pyramid below shows the headcount reality: <strong>most customer effort goes to the long tail through 1:many digital programs</strong>, freeing CSMs to be <strong>actually high-touch</strong> with the strategic accounts that drive the majority of ARR.</p>
+        <p style="font-size: 13.5px; color: var(--ink-mute); margin-top: 12px;">This is the model that makes "scalable" real. Without it, "scaling customer success" is just hiring more CSMs.</p>
+      </div>
+
+      <div>
+        <div class="pyramid">
+          <svg viewBox="0 0 500 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <!-- Tier 1 - top -->
+            <polygon points="200,30 300,30 320,90 180,90" fill="#c8492c" stroke="#8a2a14" stroke-width="1"/>
+            <text x="250" y="56" text-anchor="middle" font-family="Fraunces, serif" font-size="16" font-weight="500" fill="#fff">Tier 1</text>
+            <text x="250" y="76" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#fff" opacity="0.9">~25 strategic accounts</text>
+
+            <!-- Tier 2 - middle -->
+            <polygon points="180,95 320,95 350,180 150,180" fill="#b8893a" stroke="#6b4d1f" stroke-width="1"/>
+            <text x="250" y="130" text-anchor="middle" font-family="Fraunces, serif" font-size="16" font-weight="500" fill="#fff">Tier 2</text>
+            <text x="250" y="150" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#fff" opacity="0.9">~75–100 mid-market</text>
+
+            <!-- Tier 3 - bottom (widest) -->
+            <polygon points="150,185 350,185 400,290 100,290" fill="#4a6b3a" stroke="#3a5429" stroke-width="1"/>
+            <text x="250" y="225" text-anchor="middle" font-family="Fraunces, serif" font-size="16" font-weight="500" fill="#fff">Tier 3</text>
+            <text x="250" y="245" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#fff" opacity="0.9">long tail · self-serve</text>
+            <text x="250" y="265" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" fill="#fff" opacity="0.9">majority of accounts</text>
+
+            <!-- Side annotations -->
+            <text x="380" y="60" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5" fill="#c8492c">1:1</text>
+            <text x="380" y="75" font-family="Inter, sans-serif" font-size="9" fill="#5b5852">white-glove</text>
+
+            <text x="380" y="138" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5" fill="#b8893a">1:FEW</text>
+            <text x="380" y="153" font-family="Inter, sans-serif" font-size="9" fill="#5b5852">programmatic</text>
+
+            <text x="430" y="240" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.5" fill="#4a6b3a">1:MANY</text>
+            <text x="430" y="255" font-family="Inter, sans-serif" font-size="9" fill="#5b5852">digital, self-serve</text>
+
+            <!-- Left annotations -->
+            <text x="60" y="60" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#2c2a26" font-weight="500">High investment</text>
+            <text x="60" y="75" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#5b5852">per account</text>
+
+            <text x="60" y="265" text-anchor="end" font-family="Inter, sans-serif" font-size="10" fill="#2c2a26" font-weight="500">Low cost-to-serve</text>
+            <text x="60" y="280" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#5b5852">scaled efficiency</text>
+          </svg>
+        </div>
+
+        <div class="tier-detail">
+          <div class="tier-cell t1">
+            <div class="tier-tag">TIER 1 · 1:1</div>
+            <h6>Dedicated CSM, exec sponsor, custom QBRs</h6>
+            <p>Top ARR, strategic logos, reference candidates. Bespoke onboarding. Named contact in every function.</p>
+          </div>
+          <div class="tier-cell t2">
+            <div class="tier-tag">TIER 2 · 1:FEW</div>
+            <h6>Pooled CSM, group office hours, vertical cohorts</h6>
+            <p>Mid-market growth segment. Programmatic onboarding by industry. Quarterly group health checks.</p>
+          </div>
+          <div class="tier-cell t3">
+            <div class="tier-tag">TIER 3 · 1:MANY</div>
+            <h6>Digital-led, in-app guidance, academy &amp; community</h6>
+            <p>Long tail. Tech-touch CS. Triggered email journeys. Self-serve KB and video library do the work.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 04 — OPERATING SYSTEM -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">04</div>
+      <div>
+        <h2 class="section-title">The cross-functional <em>operating system</em></h2>
+        <p class="section-sub">Customer outcomes × functions. Product Marketing &amp; Customer Engagement is the connective tissue.</p>
+      </div>
+    </div>
+
+    <div class="grid-wrap">
+      <div class="opgrid">
+        <div class="opgrid-corner">Customer outcome ↓ · Function →</div>
+        <div class="opgrid-fhead">Product<small>What we build</small></div>
+        <div class="opgrid-fhead">PMM &amp; Cust. Engagement<small>You · the spine</small></div>
+        <div class="opgrid-fhead">Sales<small>What we sell</small></div>
+        <div class="opgrid-fhead">Customer Success<small>How we deliver</small></div>
+        <div class="opgrid-fhead">Marketing<small>How we tell it</small></div>
+
+        <!-- Outcome 1 -->
+        <div class="opgrid-rhead">Brand consistency at scale<small>Outcome 1</small></div>
+        <div class="opgrid-cell">Brand portal, templates, asset governance</div>
+        <div class="opgrid-cell pmm-cell">Outcome narrative, persona, enablement, customer council</div>
+        <div class="opgrid-cell">Vertical pitches; expansion plays</div>
+        <div class="opgrid-cell">Onboarding playbook; QBR template</div>
+        <div class="opgrid-cell">Demand gen, case studies, vertical content</div>
+
+        <!-- Outcome 2 -->
+        <div class="opgrid-rhead">Marketing ops efficiency<small>Outcome 2</small></div>
+        <div class="opgrid-cell">Localization, workflow automation, integrations</div>
+        <div class="opgrid-cell pmm-cell">Time-saved messaging; ROI calculator; advocacy</div>
+        <div class="opgrid-cell">Productivity-led pitch; ROI in proposals</div>
+        <div class="opgrid-cell">Adoption tracking; tier-based programs</div>
+        <div class="opgrid-cell">Webinar series; benchmark report</div>
+
+        <!-- Outcome 3 -->
+        <div class="opgrid-rhead">Self-served control<small>Outcome 3</small></div>
+        <div class="opgrid-cell">Admin tools, role mgmt, audit, governance</div>
+        <div class="opgrid-cell pmm-cell">Launch playbook; KB strategy; train-the-trainer</div>
+        <div class="opgrid-cell">Self-serve story for procurement &amp; IT</div>
+        <div class="opgrid-cell">In-product activation; help-center curation</div>
+        <div class="opgrid-cell">Customer marketing; in-app comms</div>
+
+        <!-- Outcome 4 -->
+        <div class="opgrid-rhead">Findable, usable assets<small>Outcome 4</small></div>
+        <div class="opgrid-cell">DAM, search, AI tagging, semantic search</div>
+        <div class="opgrid-cell pmm-cell">Search-tier narrative; persona-led demos</div>
+        <div class="opgrid-cell">Vertical-specific demos; AI-led pitch</div>
+        <div class="opgrid-cell">Use-case workshops; adoption nudges</div>
+        <div class="opgrid-cell">AI/innovation story; thought leadership</div>
+      </div>
+    </div>
+
+    <h3 style="font-family: 'Fraunces', serif; font-weight: 400; font-size: 22px; margin: 40px 0 16px;">Rituals &mdash; the <em style="font-style: italic; color: var(--accent-deep);">cadence</em> that makes it real</h3>
+
+    <div class="rituals">
+      <div class="ritual">
+        <div class="when">Weekly · 30 min</div>
+        <h6>Cross-functional stand-up</h6>
+        <p>Workstream leads from PM, PMM, CS, Marketing, Sales. Status, blockers, customer signals.</p>
+      </div>
+      <div class="ritual">
+        <div class="when">Monthly · 60 min</div>
+        <h6>Customer outcome review</h6>
+        <p>One outcome per month deep-dive. Win/loss/churn data, adoption metrics, narrative refresh.</p>
+      </div>
+      <div class="ritual">
+        <div class="when">Quarterly · half-day</div>
+        <h6>Customer Council + QBR</h6>
+        <p>External: 12 strategic customers in dialogue. Internal: full QBR on outcomes &amp; programs.</p>
+      </div>
+      <div class="ritual">
+        <div class="when">Annual</div>
+        <h6>Customer journey re-mapping</h6>
+        <p>Full review of activation, adoption, and advocacy data. Reset outcomes, retire what's not working.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 05 — ROADMAP -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">05</div>
+      <div>
+        <h2 class="section-title">12-month <em>roadmap</em></h2>
+        <p class="section-sub">Diagnose, build, scale. Show measurable wins inside 6 months.</p>
+      </div>
+    </div>
+
+    <div class="roadmap">
+      <div class="roadmap-track">
+
+        <div class="roadmap-phase">
+          <div class="ph-label">Days 0–90 · Q1</div>
+          <h4>Diagnose &amp; <em>foundation</em></h4>
+          <ul>
+            <li>Baseline TTV, NRR, adoption, NPS, churn — by tier and segment</li>
+            <li>Customer journey map across all 5 flagship products</li>
+            <li>Pick 3 priority outcomes &amp; 3 priority verticals</li>
+            <li>Tier the customer base; align CS pods to tiers</li>
+            <li>Hire / restructure plan agreed with CCSSO</li>
+            <li>Stand up the rituals (stand-up, monthly review)</li>
+            <li>Quick win: industrialize the Portal Admin 1.2 launch playbook</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-phase">
+          <div class="ph-label">Months 4–6 · Q2</div>
+          <h4>Build &amp; <em>pilot</em></h4>
+          <ul>
+            <li>Launch revised onboarding playbooks for top 3 verticals</li>
+            <li>First in-product activation flows live (Initiative 01)</li>
+            <li>Outcome-led narratives published; sales decks reorganized</li>
+            <li>Customer Council convenes for the first time</li>
+            <li>CSM enablement program v1 — all CSMs through it</li>
+            <li>First 6-month KPI read &mdash; first measurable lift visible</li>
+          </ul>
+        </div>
+
+        <div class="roadmap-phase">
+          <div class="ph-label">Months 7–12 · Q3–Q4</div>
+          <h4>Scale &amp; <em>optimise</em></h4>
+          <ul>
+            <li>Tier 3 digital programs at full scale (academy, community)</li>
+            <li>All product launches use the standardized playbook by Q3</li>
+            <li>Advocacy engine producing 1+ case study / month</li>
+            <li>NRR lift visible; first-year churn measurably down</li>
+            <li>QBR with leadership on full-year results</li>
+            <li>Year-2 plan agreed; team scaled to delivery model</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 06 — MANDATE -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">06</div>
+      <div>
+        <h2 class="section-title">What I need from <em>you</em></h2>
+        <p class="section-sub">The mandate ask &mdash; the specific decisions that unlock the plan.</p>
+      </div>
+    </div>
+
+    <div class="mandate">
+
+      <div class="mandate-card">
+        <div class="label">Mandate &amp; Authority</div>
+        <h3>The <em>scope</em> &amp; decision rights I'm asking for.</h3>
+        <ul class="mandate-list">
+          <li>
+            <strong>Title &amp; remit</strong>
+            VP Product Marketing &amp; Customer Engagement &mdash; explicit ownership of the post-sale narrative, content, and lifecycle programs across Activate · Adopt · Advocate.
+          </li>
+          <li>
+            <strong>Cross-functional authority</strong>
+            Empowered to convene PM, Sales, CS, and Marketing leaders on a fixed cadence. Decision rights on customer-facing comms, content, and launch playbooks.
+          </li>
+          <li>
+            <strong>Budget</strong>
+            Existing PMM budget + investment for: lifecycle marketing tooling, customer academy platform, in-product education layer, advocacy program. Specific number TBD against approved 6-month plan.
+          </li>
+          <li>
+            <strong>Headcount</strong>
+            Three net-new roles (or restructure-equivalents): <em>Lifecycle / Customer Marketer</em>, <em>Customer Marketing &amp; Advocacy Lead</em>, <em>Enablement Specialist</em>. CS-aligned PMM possible later.
+          </li>
+          <li>
+            <strong>Governance</strong>
+            Direct report to CCSSO. Dotted line / partnership with CMO &amp; CPO. Quarterly readout to executive team on outcomes, not activities.
+          </li>
+        </ul>
+      </div>
+
+      <div class="mandate-card alt">
+        <div class="label">First conversation</div>
+        <h3>Things to <em>land</em> in our planning meeting.</h3>
+        <ul class="mandate-list">
+          <li>
+            <strong>Agree the frame</strong>
+            Go-to-Value as the next chapter. Get aligned that this isn't a CS reorg, it's a <em>company-wide</em> operating shift in which CS is the centre.
+          </li>
+          <li>
+            <strong>Agree the three initiatives</strong>
+            Activation Engine, Adoption Flywheel, Voice &amp; Velocity System. Confirm priority order and which one we lead with publicly.
+          </li>
+          <li>
+            <strong>Agree on outcomes, not features</strong>
+            We pick 3–5 customer outcomes together &mdash; this is the strategic anchor for the next 12 months. My role is to help him land these with clarity inside the company.
+          </li>
+          <li>
+            <strong>Agree the quick win</strong>
+            Industrialize the Portal Admin 1.2 launch playbook as the prototype Adoption motion. A real artefact, in 90 days, that proves the model.
+          </li>
+          <li>
+            <strong>Agree the KPI dashboard</strong>
+            TTV, 90-day activation rate, NRR, feature adoption %, NPS lift. One dashboard, one source of truth, reviewed monthly.
+          </li>
+          <li>
+            <strong>Agree what I stop doing</strong>
+            To take this on, some current PMM work hands off or pauses. Surface the trade-offs honestly &mdash; saying yes to this means saying no to something.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span>Frank Tommy · Papirfly · Confidential planning brief · v1.0</span>
+    <em>"From Go-to-Market to Go-to-Value"</em>
+  </div>
+
+</div>
+</body>
+</html>
